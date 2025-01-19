@@ -12,7 +12,50 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("DashBorad"),
+        leading: Builder(builder: (context) {
+          return IconButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) {
+                    return Builder(builder: (context) {
+                      return Drawer(
+                          child: ListView(
+                        children: [
+                          Container(
+                            color: Colors.grey[200],
+                            child: Align(
+                              alignment: Alignment.topRight,
+                              child: IconButton(
+                                  onPressed: () => Navigator.of(context).pop(),
+                                  icon: Icon(
+                                    Icons.close,
+                                    color: Colors.red,
+                                  )),
+                            ),
+                          ),
+                          Sidebar(),
+                        ],
+                      ));
+                    });
+                  }),
+                );
+              },
+              icon: const Icon(
+                Icons.menu,
+              ));
+        }),
+        actions: [
+          IconButton(
+              onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) {
+                      return RightSidebar();
+                    }),
+                  ),
+              icon: Icon(Icons.notifications))
+        ],
+      ),
       body: LayoutBuilder(
         builder: (context, constraints) {
           if (constraints.maxWidth > 1200) {
@@ -40,7 +83,7 @@ class DashboardScreen extends StatelessWidget {
             return Row(
               children: [
                 // Sidebar
-                Drawer(child: SingleChildScrollView(child: Sidebar())),
+                Sidebar(),
                 // Main Content
                 Expanded(
                   child: Column(
@@ -128,7 +171,14 @@ class Sidebar extends StatelessWidget {
               ),
             ],
           ),
-          SidebarItem(icon: Icons.home, label: 'Home'),
+          Container(
+              // color: Colors.grey[400],
+              decoration: BoxDecoration(
+                borderRadius:
+                    BorderRadius.horizontal(left: Radius.circular(20)),
+                color: Colors.grey[400],
+              ),
+              child: SidebarItem(icon: Icons.home, label: 'Home')),
           SidebarItem(icon: Icons.person, label: 'Employees'),
           SidebarItem(icon: Icons.schedule, label: 'Attendance'),
           SidebarItem(icon: Icons.pie_chart, label: 'Summary'),
@@ -161,10 +211,12 @@ class SidebarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(icon, size: 20),
-      title: Text(label, style: TextStyle(fontSize: 14)),
-      onTap: () {},
+    return Center(
+      child: ListTile(
+        leading: Icon(icon, size: 20),
+        title: Text(label, style: TextStyle(fontSize: 14)),
+        onTap: () {},
+      ),
     );
   }
 }
@@ -200,7 +252,7 @@ class HeaderBar extends StatelessWidget {
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           Container(
-            width: 400,
+            width: MediaQuery.of(context).size.width > 400 ? 400 : 200,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: TextField(
@@ -229,21 +281,35 @@ class MainContent extends StatelessWidget {
         padding: EdgeInsets.all(20),
         child: LayoutBuilder(
           builder: (context, constraints) {
-            return Column(
-              children: [
-                TopRattingProject(),
-                SizedBox(height: 20),
-                Row(
-                  children: [
-                    Expanded(child: ProjectCard()),
-                    SizedBox(width: 8),
-                    Expanded(child: TopCreatorsCard()),
-                  ],
-                ),
-                SizedBox(height: 20),
-                // PerformanceGraph(),
-              ],
-            );
+            if (constraints.maxWidth > 600) {
+              return Column(
+                children: [
+                  TopRattingProject(),
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Expanded(child: ProjectCard()),
+                      SizedBox(width: 8),
+                      Expanded(child: TopCreatorsCard()),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  // PerformanceGraph(),
+                ],
+              );
+            } else {
+              return Column(
+                children: [
+                  TopRattingProject(),
+                  SizedBox(height: 20),
+                  ProjectCard(),
+                  SizedBox(height: 8),
+                  TopCreatorsCard(),
+                  SizedBox(height: 20),
+                  // PerformanceGraph(),
+                ],
+              );
+            }
           },
         ),
       ),
@@ -273,7 +339,10 @@ class RightSidebar extends StatelessWidget {
                     SizedBox(width: 20),
                     Icon(Icons.notifications, size: 28),
                     SizedBox(width: 20),
-                    Icon(Icons.power_settings_new_outlined, size: 28),
+                    IconButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        icon:
+                            Icon(Icons.power_settings_new_outlined, size: 28)),
                     SizedBox(width: 80),
                     CircleAvatar(
                       radius: 18,

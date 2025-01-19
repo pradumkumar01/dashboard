@@ -26,7 +26,7 @@ class TopRattingProject extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 8,
+              height: 5,
             ),
             Row(
               children: [
