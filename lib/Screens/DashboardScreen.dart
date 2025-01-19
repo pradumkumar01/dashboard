@@ -378,20 +378,51 @@ class RightSidebar extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             color: Colors.grey[100],
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  // mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Icon(Icons.note, size: 28),
-                    SizedBox(width: 20),
-                    Icon(Icons.notifications, size: 28),
-                    SizedBox(width: 20),
+                    Stack(clipBehavior: Clip.none, children: [
+                      IconButton(
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) {
+                                return RightSidebar();
+                              }),
+                            );
+                          },
+                          icon: Icon(Icons.assignment_outlined, size: 28)),
+                      const Positioned(
+                        right: 9,
+                        top: 9,
+                        child: CircleAvatar(
+                          radius: 4,
+                          backgroundColor: Colors.red,
+                        ),
+                      ),
+                    ]),
+                    Stack(clipBehavior: Clip.none, children: [
+                      IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.notifications, size: 28)),
+                      const Positioned(
+                        right: 12,
+                        top: 12,
+                        child: CircleAvatar(
+                          radius: 4,
+                          backgroundColor: Colors.orange,
+                        ),
+                      ),
+                    ]),
+                    // SizedBox(width: 20),
+                    // Icon(Icons.notifications, size: 28),
+                    // SizedBox(width: 20),
                     IconButton(
                         onPressed: () => Navigator.of(context).pop(),
                         icon:
                             Icon(Icons.power_settings_new_outlined, size: 28)),
-                    SizedBox(width: 80),
+                    SizedBox(width: 200),
                     CircleAvatar(
                       radius: 18,
                       backgroundImage: AssetImage('assets/profile.jpg'),
