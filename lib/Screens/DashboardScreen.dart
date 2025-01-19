@@ -178,23 +178,23 @@ class Sidebar extends StatelessWidget {
                     BorderRadius.horizontal(left: Radius.circular(20)),
                 color: Colors.grey[400],
               ),
-              child: SidebarItem(icon: Icons.home, label: 'Home')),
+              child: Home(icon: Icons.home, label: 'Home')),
           SidebarItem(icon: Icons.person, label: 'Employees'),
           SidebarItem(icon: Icons.schedule, label: 'Attendance'),
           SidebarItem(icon: Icons.pie_chart, label: 'Summary'),
           SidebarItem(icon: Icons.info, label: 'Information'),
-          SidebarItem1(
-            label: 'WORKSPACES',
-            icon: Icons.add,
-          ),
-          SidebarItem1(
+          Container(
+              color: Colors.blue[200],
+              child: SidebarItem1(label: 'WORKSPACES', icon: Icons.add)),
+          SidebarItem2(
             label: 'Adstacks',
             icon: Icons.keyboard_arrow_down_sharp,
           ),
-          SidebarItem1(
+          SidebarItem2(
             label: 'Finance',
             icon: Icons.keyboard_arrow_down_sharp,
           ),
+          SizedBox(height: 30),
           SidebarItem(icon: Icons.settings, label: 'Settings'),
           SidebarItem(icon: Icons.logout, label: 'Logout'),
         ],
@@ -211,10 +211,35 @@ class SidebarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
       child: ListTile(
         leading: Icon(icon, size: 20),
         title: Text(label, style: TextStyle(fontSize: 14)),
+        onTap: () {},
+      ),
+    );
+  }
+}
+
+class Home extends StatelessWidget {
+  final IconData icon;
+  final String label;
+
+  Home({required this.icon, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+      child: ListTile(
+        leading: Icon(
+          icon,
+          size: 20,
+          color: Colors.black,
+        ),
+        title: Text(label,
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         onTap: () {},
       ),
     );
@@ -229,9 +254,32 @@ class SidebarItem1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+      child: ListTile(
+        trailing: Icon(icon, size: 20),
+        title: Text(label,
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        onTap: () {},
+      ),
+    );
+  }
+}
+
+class SidebarItem2 extends StatelessWidget {
+  final IconData icon;
+  final String label;
+
+  SidebarItem2({required this.icon, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
     return ListTile(
       trailing: Icon(icon, size: 20),
-      title: Text(label, style: TextStyle(fontSize: 16)),
+      title: Padding(
+        padding: const EdgeInsets.fromLTRB(40, 0, 0, 0),
+        child: Text(label, style: TextStyle(fontSize: 16)),
+      ),
       onTap: () {},
     );
   }
@@ -252,7 +300,7 @@ class HeaderBar extends StatelessWidget {
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           Container(
-            width: MediaQuery.of(context).size.width > 400 ? 400 : 200,
+            width: MediaQuery.of(context).size.width > 400 ? 250 : 400,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: TextField(

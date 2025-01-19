@@ -3,10 +3,10 @@ import 'package:dashboard/Screens/DashboardScreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(OfficeDashboardApp());
+  runApp(DashboardApp());
 }
 
-class OfficeDashboardApp extends StatelessWidget {
+class DashboardApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
