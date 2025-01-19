@@ -422,7 +422,9 @@ class RightSidebar extends StatelessWidget {
                         onPressed: () => Navigator.of(context).pop(),
                         icon:
                             Icon(Icons.power_settings_new_outlined, size: 28)),
-                    SizedBox(width: 200),
+                    SizedBox(
+                        width:
+                            MediaQuery.of(context).size.width > 400 ? 80 : 200),
                     CircleAvatar(
                       radius: 18,
                       backgroundImage: AssetImage('assets/profile.jpg'),
